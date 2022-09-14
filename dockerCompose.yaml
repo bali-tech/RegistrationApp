@@ -1,0 +1,22 @@
+version: '3.2'
+services:
+    PostgreSQL:
+      image: postgres
+      environment:
+          - POSTGRES_PASSWORD=password
+          - POSTGRES_USER=postgres
+          - POSTGRES_DB=postgres
+      ports:
+           - "5432:5432"
+
+    Registration_Module:
+       image: 'registration-image'
+       depends_on:
+           - PostgreSQL
+       ports:
+           - "8078:8078"
+       environment:
+          - SPRING_DATASOURCE_URL=jdbc:postgresql://PostgreSQL:5432/postgres
+          - SPRING_DATASOURCE_USERNAME=postgres
+          - SPRING_DATASOURCE_PASSWORD=password
+          - SPRING_JPA_HIBERNATE_DDL_AUTO=update
